@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<title>Exam & Typing Hub</title>
-
+<title>Typing Practice</title>
 <style>
 body{
-  background-color:#eaf6ff;
   font-family:Arial;
+  background:#eef7ff;
   padding:20px;
+  text-align:center;
 }
-
-h1{
-  color:blue;
+textarea{
+  width:90%;
+  height:120px;
+  font-size:18px;
 }
-
 button{
-  background-color:blue;
-  color:white;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  margin:5px;
+  padding:10px 20px;
+  margin-top:10px;
 }
 </style>
 </head>
-
 <body>
 
-<h1>📚 Exam & Typing Hub</h1>
+<h1>⌨️ Typing Practice</h1>
 
-<p>IBPS • RRB • SSC • Typing Practice</p>
+<p><b>Type this:</b></p>
 
-<h2>Latest Updates</h2>
+<p id="text">
+Practice makes perfect. Keep typing every day to improve your speed and accuracy.
+</p>
 
-<p>AHC Group C Preparation</p>
+<textarea id="input" placeholder="Start typing here..."></textarea>
 
-<p>IBPS PO Preparation Tips</p>
+<br>
 
-<button>Start Typing Practice</button>
+<button onclick="checkTyping()">Check Result</button>
 
-<br><br>
+<p id="result"></p>
 
-<a href="notes.html">
-  <button>📚 Notes</button>
-</a>
+<script>
+function checkTyping(){
+let original=document.getElementById("text").innerText.trim();
+let typed=document.getElementById("input").value.trim();
 
-<br><br>
+if(original===typed){
+document.getElementById("result").innerHTML="✅ Perfect! 100% Accurate";
+}else{
+document.getElementById("result").innerHTML="❌ Keep Practicing!";
+}
+}
+</script>
 
-<a href="typing.html">
-  <button>⌨️ Typing Practice</button>
-</a>
 </body>
 </html>

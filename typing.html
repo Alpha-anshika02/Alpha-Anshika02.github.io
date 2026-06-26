@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Typing Test</title>
+<title>Advanced Typing Test</title>
 
 <style>
 body{
@@ -27,11 +27,16 @@ textarea{
 
 button{
   padding:10px 20px;
-  margin:10px;
+  margin:8px;
   background:blue;
   color:white;
   border:none;
   border-radius:8px;
+}
+
+#timer{
+  font-size:20px;
+  color:red;
 }
 
 #result{
@@ -43,10 +48,12 @@ button{
 
 <body>
 
-<h1>⌨️ Typing Test</h1>
+<h1>⌨️ Advanced Typing Test</h1>
+
+<div id="timer">Time: 0s</div>
 
 <p id="text">
-The quick brown fox jumps over the lazy dog. Practice daily to improve speed and accuracy.
+Practice daily to improve your typing speed and accuracy for exams like SSC, IBPS and RRB.
 </p>
 
 <textarea id="input" placeholder="Start typing here..."></textarea>
@@ -55,31 +62,48 @@ The quick brown fox jumps over the lazy dog. Practice daily to improve speed and
 
 <button onclick="startTest()">Start</button>
 <button onclick="endTest()">Submit</button>
+<button onclick="resetTest()">Reset</button>
 
 <p id="result"></p>
 
 <script>
 let startTime;
+let timer;
+let seconds = 0;
 
 function startTest(){
-  startTime = new Date().getTime();
   document.getElementById("input").value = "";
-  document.getElementById("result").innerHTML = "⏱️ Test started...";
+  document.getElementById("result").innerHTML = "";
+
+  seconds = 0;
+  document.getElementById("timer").innerHTML = "Time: 0s";
+
+  startTime = new Date().getTime();
+
+  clearInterval(timer);
+  timer = setInterval(()=>{
+    seconds++;
+    document.getElementById("timer").innerHTML = "Time: " + seconds + "s";
+  },1000);
 }
 
 function endTest(){
-  let endTime = new Date().getTime();
+  clearInterval(timer);
 
-  let timeTaken = (endTime - startTime) / 1000 / 60; // minutes
+  let endTime = new Date().getTime();
+  let timeTaken = (endTime - startTime) / 1000 / 60;
 
   let text = document.getElementById("text").innerText.trim().split(" ");
   let typed = document.getElementById("input").value.trim().split(" ");
 
   let correct = 0;
+  let wrong = 0;
 
   for(let i=0; i<typed.length; i++){
     if(typed[i] === text[i]){
       correct++;
+    } else {
+      wrong++;
     }
   }
 
@@ -88,7 +112,16 @@ function endTest(){
 
   document.getElementById("result").innerHTML =
     "⚡ Speed: " + wpm + " WPM<br>" +
-    "🎯 Accuracy: " + accuracy + "%";
+    "🎯 Accuracy: " + accuracy + "%<br>" +
+    "❌ Mistakes: " + wrong;
+}
+
+function resetTest(){
+  clearInterval(timer);
+  seconds = 0;
+  document.getElementById("timer").innerHTML = "Time: 0s";
+  document.getElementById("input").value = "";
+  document.getElementById("result").innerHTML = "";
 }
 </script>
 

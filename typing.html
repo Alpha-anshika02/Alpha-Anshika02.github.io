@@ -1,53 +1,94 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Typing Practice</title>
+<title>Typing Test</title>
+
 <style>
 body{
   font-family:Arial;
   background:#eef7ff;
-  padding:20px;
   text-align:center;
+  padding:20px;
 }
+
+#text{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin:15px;
+  font-size:18px;
+}
+
 textarea{
   width:90%;
   height:120px;
   font-size:18px;
 }
+
 button{
   padding:10px 20px;
-  margin-top:10px;
+  margin:10px;
+  background:blue;
+  color:white;
+  border:none;
+  border-radius:8px;
+}
+
+#result{
+  font-size:18px;
+  margin-top:15px;
 }
 </style>
 </head>
+
 <body>
 
-<h1>⌨️ Typing Practice</h1>
-
-<p><b>Type this:</b></p>
+<h1>⌨️ Typing Test</h1>
 
 <p id="text">
-Practice makes perfect. Keep typing every day to improve your speed and accuracy.
+The quick brown fox jumps over the lazy dog. Practice daily to improve speed and accuracy.
 </p>
 
 <textarea id="input" placeholder="Start typing here..."></textarea>
 
 <br>
 
-<button onclick="checkTyping()">Check Result</button>
+<button onclick="startTest()">Start</button>
+<button onclick="endTest()">Submit</button>
 
 <p id="result"></p>
 
 <script>
-function checkTyping(){
-let original=document.getElementById("text").innerText.trim();
-let typed=document.getElementById("input").value.trim();
+let startTime;
 
-if(original===typed){
-document.getElementById("result").innerHTML="✅ Perfect! 100% Accurate";
-}else{
-document.getElementById("result").innerHTML="❌ Keep Practicing!";
+function startTest(){
+  startTime = new Date().getTime();
+  document.getElementById("input").value = "";
+  document.getElementById("result").innerHTML = "⏱️ Test started...";
 }
+
+function endTest(){
+  let endTime = new Date().getTime();
+
+  let timeTaken = (endTime - startTime) / 1000 / 60; // minutes
+
+  let text = document.getElementById("text").innerText.trim().split(" ");
+  let typed = document.getElementById("input").value.trim().split(" ");
+
+  let correct = 0;
+
+  for(let i=0; i<typed.length; i++){
+    if(typed[i] === text[i]){
+      correct++;
+    }
+  }
+
+  let wpm = Math.round(correct / timeTaken);
+  let accuracy = Math.round((correct / text.length) * 100);
+
+  document.getElementById("result").innerHTML =
+    "⚡ Speed: " + wpm + " WPM<br>" +
+    "🎯 Accuracy: " + accuracy + "%";
 }
 </script>
 

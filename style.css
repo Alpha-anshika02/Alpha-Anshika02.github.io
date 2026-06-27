@@ -1,0 +1,27 @@
+body{
+    font-family: Arial, sans-serif;
+}
+
+/* Dark mode */
+.dark{
+    background-color: #121212 !important;
+    color: white !important;
+}
+
+.dark .bg-white{
+    background-color: #1f1f1f !important;
+    color: white !important;
+}
+
+.dark .text-muted{
+    color: #bbb !important;
+}
+
+/* Buttons hover effect */
+.btn{
+    transition: 0.2s;
+}
+
+.btn:hover{
+    transform: scale(1.03);
+}

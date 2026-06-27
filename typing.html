@@ -1,127 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Advanced Typing Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  font-family:Arial;
-  background:#eef7ff;
-  text-align:center;
-  padding:20px;
-}
+<title>Typing Test - ExamVerse</title>
 
-#text{
-  background:white;
-  padding:15px;
-  border-radius:10px;
-  margin:15px;
-  font-size:18px;
-}
-
-textarea{
-  width:90%;
-  height:120px;
-  font-size:18px;
-}
-
-button{
-  padding:10px 20px;
-  margin:8px;
-  background:blue;
-  color:white;
-  border:none;
-  border-radius:8px;
-}
-
-#timer{
-  font-size:20px;
-  color:red;
-}
-
-#result{
-  font-size:18px;
-  margin-top:15px;
-}
-</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>⌨️ Advanced Typing Test</h1>
+<nav class="navbar navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a href="index.html" class="navbar-brand">⬅ Typing Test</a>
+  </div>
+</nav>
 
-<div id="timer">Time: 0s</div>
+<div class="container mt-3">
 
+<h3>⌨️ Typing Practice</h3>
+
+<!-- TIMER -->
+<div class="p-3 bg-white shadow-sm rounded text-center mb-3">
+<h4 id="timer">60</h4>
+<p class="text-muted">Seconds Left</p>
+</div>
+
+<!-- TEXT -->
+<div class="p-3 bg-white shadow-sm rounded mb-3">
 <p id="text">
-Practice daily to improve your typing speed and accuracy for exams like SSC, IBPS and RRB.
+The quick brown fox jumps over the lazy dog. Practice daily to improve your speed and accuracy.
 </p>
+</div>
 
-<textarea id="input" placeholder="Start typing here..."></textarea>
+<!-- INPUT -->
+<textarea id="input" class="form-control" rows="4" placeholder="Start typing here..."></textarea>
 
-<br>
+<!-- START -->
+<button class="btn btn-primary w-100 mt-3" onclick="startTest()">
+Start Test
+</button>
 
-<button onclick="startTest()">Start</button>
-<button onclick="endTest()">Submit</button>
-<button onclick="resetTest()">Reset</button>
+<!-- RESULT -->
+<div class="p-3 bg-white shadow-sm rounded mt-3 text-center">
+<h5>Result</h5>
+<p id="result">WPM: - | Accuracy: -</p>
 
-<p id="result"></p>
+<button class="btn btn-success w-100 mt-2" onclick="startTest()">
+🔁 Restart Test
+</button>
+</div>
+
+</div>
 
 <script>
-let startTime;
-let timer;
-let seconds = 0;
+let time = 60;
+let interval;
+
+const sampleText = document.getElementById("text").innerText;
 
 function startTest(){
-  document.getElementById("input").value = "";
-  document.getElementById("result").innerHTML = "";
+    let input = document.getElementById("input");
+    input.value = "";
+    input.focus();
 
-  seconds = 0;
-  document.getElementById("timer").innerHTML = "Time: 0s";
+    time = 60;
+    document.getElementById("timer").innerText = time;
 
-  startTime = new Date().getTime();
+    clearInterval(interval);
 
-  clearInterval(timer);
-  timer = setInterval(()=>{
-    seconds++;
-    document.getElementById("timer").innerHTML = "Time: " + seconds + "s";
-  },1000);
+    let best = localStorage.getItem("bestWPM") || 0;
+    document.getElementById("result").innerHTML = "🏆 Best: " + best;
+
+    interval = setInterval(()=>{
+        time--;
+        document.getElementById("timer").innerText = time;
+
+        if(time === 0){
+            clearInterval(interval);
+            calculateResult();
+        }
+    },1000);
 }
 
-function endTest(){
-  clearInterval(timer);
+function calculateResult(){
+    let typedText = document.getElementById("input").value.trim();
 
-  let endTime = new Date().getTime();
-  let timeTaken = (endTime - startTime) / 1000 / 60;
+    let typedWordsArr = typedText.split(" ").filter(w => w !== "");
+    let typedWords = typedWordsArr.length;
 
-  let text = document.getElementById("text").innerText.trim().split(" ");
-  let typed = document.getElementById("input").value.trim().split(" ");
+    let wpm = Math.round(typedWords);
 
-  let correct = 0;
-  let wrong = 0;
+    let originalWords = sampleText.split(" ");
 
-  for(let i=0; i<typed.length; i++){
-    if(typed[i] === text[i]){
-      correct++;
-    } else {
-      wrong++;
+    let correct = 0;
+
+    for(let i = 0; i < typedWordsArr.length; i++){
+        if(typedWordsArr[i] === originalWords[i]){
+            correct++;
+        }
     }
-  }
 
-  let wpm = Math.round(correct / timeTaken);
-  let accuracy = Math.round((correct / text.length) * 100);
+    let accuracy = typedWordsArr.length > 0 
+        ? Math.round((correct / originalWords.length) * 100)
+        : 0;
 
-  document.getElementById("result").innerHTML =
-    "⚡ Speed: " + wpm + " WPM<br>" +
-    "🎯 Accuracy: " + accuracy + "%<br>" +
-    "❌ Mistakes: " + wrong;
-}
+    let best = localStorage.getItem("bestWPM");
 
-function resetTest(){
-  clearInterval(timer);
-  seconds = 0;
-  document.getElementById("timer").innerHTML = "Time: 0s";
-  document.getElementById("input").value = "";
-  document.getElementById("result").innerHTML = "";
+    if(!best || wpm > best){
+        localStorage.setItem("bestWPM", wpm);
+        best = wpm;
+    }
+
+    document.getElementById("result").innerHTML =
+    "WPM: " + wpm +
+    " | Accuracy: " + accuracy + "%" +
+    "<br>🏆 Best: " + best;
 }
 </script>
 

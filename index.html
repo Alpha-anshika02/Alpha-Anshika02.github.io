@@ -1,60 +1,60 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html>
-
 <head>
-<title>Exam & Typing Hub</title>
+<title>Exam Pro Home</title>
 
 <style>
 body{
-  background-color:#eaf6ff;
   font-family:Arial;
+  background:#eef7ff;
+  text-align:center;
   padding:20px;
 }
 
 h1{
-  color:blue;
+  color:#1a73e8;
 }
 
-button{
-  background-color:blue;
-  color:white;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  margin:5px;
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin-top:20px;
 }
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  text-decoration:none;
+  color:black;
+  font-weight:bold;
+}
+
+.card:hover{
+  background:#e3f2fd;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>📚 Exam & Typing Hub</h1>
+<h1>📚 Exam Pro App</h1>
+<p>SSC • IBPS • RRB • AHC Prep</p>
 
-<p>IBPS • RRB • SSC • Typing Practice</p>
+<div class="grid">
 
-<h2>Latest Updates</h2>
+<a class="card" href="notes.html">📚 Notes</a>
 
-<p>AHC Group C Preparation</p>
+<a class="card" href="typing.html">⌨️ Typing</a>
 
-<p>IBPS PO Preparation Tips</p>
+<a class="card" href="app.html">📱 Pro App</a>
 
-<button>Start Typing Practice</button>
+<a class="card" href="#">📝 Quiz (Soon)</a>
 
-<br><br>
-
-<a href="notes.html">
-  <button>📚 Notes</button>
-</a>
-
-<br><br>
-
-<a href="typing.html">
-  <button>⌨️ Typing Practice</button>
-</a>
-
-<a href="app.html">
-  <button>📱 Pro App</button>
-</a>
+</div>
 
 </body>
 </html>

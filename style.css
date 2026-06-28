@@ -1,11 +1,11 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: Arial;
   background: #f5f7ff;
 }
 
 header {
-  background: linear-gradient(135deg, #4a6cf7, #6a8dff);
+  background: #4a6cf7;
   color: white;
   text-align: center;
   padding: 25px;
@@ -14,30 +14,26 @@ header {
 
 .container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: wrap;
   padding: 20px;
 }
 
 .card {
   background: white;
-  width: 260px;
+  width: 250px;
   margin: 15px;
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 button {
   background: #4a6cf7;
   color: white;
   border: none;
-  padding: 10px 14px;
+  padding: 10px 15px;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -49,6 +45,17 @@ button:hover {
 footer {
   text-align: center;
   padding: 15px;
-  margin-top: 20px;
   color: gray;
+}
+
+/* Quiz UI */
+#quiz {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Result UI */
+#result {
+  text-align: center;
+  padding: 30px;
 }

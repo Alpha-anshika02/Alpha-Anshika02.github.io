@@ -166,3 +166,20 @@ function startIBPS() {
 function startMock() {
   startQuiz("MOCK");
 }
+function showHome() {
+  document.getElementById("home").style.display = "block";
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "none";
+}
+
+function showQuizScreen() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  document.getElementById("result").style.display = "none";
+}
+
+function showResultScreen() {
+  document.getElementById("home").style.display = "none";
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+}

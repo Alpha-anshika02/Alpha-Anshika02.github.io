@@ -1,27 +1,54 @@
-body{
-    font-family: Arial, sans-serif;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f5f7ff;
 }
 
-/* Dark mode */
-.dark{
-    background-color: #121212 !important;
-    color: white !important;
+header {
+  background: linear-gradient(135deg, #4a6cf7, #6a8dff);
+  color: white;
+  text-align: center;
+  padding: 25px;
+  border-radius: 0 0 20px 20px;
 }
 
-.dark .bg-white{
-    background-color: #1f1f1f !important;
-    color: white !important;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
 }
 
-.dark .text-muted{
-    color: #bbb !important;
+.card {
+  background: white;
+  width: 260px;
+  margin: 15px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: 0.3s;
 }
 
-/* Buttons hover effect */
-.btn{
-    transition: 0.2s;
+.card:hover {
+  transform: translateY(-5px);
 }
 
-.btn:hover{
-    transform: scale(1.03);
+button {
+  background: #4a6cf7;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2f4ed1;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+  color: gray;
 }

@@ -1,138 +1,153 @@
-const quizBank = {
-  SSC: [
-    {
-      question: "India ka capital kya hai?",
-      options: ["Mumbai", "Delhi", "Kolkata", "Chennai"],
-      answer: "Delhi"
-    },
-    {
-      question: "2 + 2 = ?",
-      options: ["3", "4", "5", "6"],
-      answer: "4"
-    }
-  ],
 
-  IBPS: [
-    {
-      question: "IBPS full form?",
-      options: [
-        "Institute of Banking Personnel Selection",
-        "Indian Bank Public Service",
-        "Internal Banking System",
-        "None"
-      ],
-      answer: "Institute of Banking Personnel Selection"
-    }
-  ],
 
-  MOCK: [
-    {
-      question: "SSC ka full form?",
-      options: [
-        "Staff Selection Commission",
-        "State Service Center",
-        "Simple Study Course",
-        "None"
-      ],
-      answer: "Staff Selection Commission"
-    }
-  ]
-};
+// =========================
+// DARK MODE
+// =========================
 
-let currentQuiz = [];
-let currentQuestion = 0;
-let score = 0;
-let timer;
-let timeLeft = 15;
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
 
-/* START QUIZ */
-function startQuiz(type) {
-  currentQuiz = quizBank[type];
-  currentQuestion = 0;
-  score = 0;
-
-  showQuizScreen();
-  loadQuestion(type);
-}
-
-/* SHOW QUIZ SCREEN */
-function showQuizScreen() {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("quiz").style.display = "block";
-  document.getElementById("result").style.display = "none";
-}
-
-/* LOAD QUESTION */
-function loadQuestion(type) {
-  const q = currentQuiz[currentQuestion];
-
-  document.getElementById("quiz").innerHTML = `
-    <h2 id="timer">Time: 15</h2>
-    <h3>Question ${currentQuestion + 1} / ${currentQuiz.length}</h3>
-
-    <h1>${q.question}</h1>
-
-    ${q.options.map(opt => `
-      <button onclick="checkAnswer(this,'${opt}','${type}')">${opt}</button>
-    `).join("")}
-  `;
-
-  startTimer(type);
-}
-
-/* TIMER */
-function startTimer(type) {
-  timeLeft = 15;
-
-  timer = setInterval(() => {
-    document.getElementById("timer").innerText = "Time: " + timeLeft;
-    timeLeft--;
-
-    if (timeLeft < 0) {
-      clearInterval(timer);
-      nextQuestion(type);
-    }
-  }, 1000);
-}
-
-/* ANSWER CHECK */
-function checkAnswer(btn, selected, type) {
-  clearInterval(timer);
-
-  const correct = currentQuiz[currentQuestion].answer;
-  const buttons = document.querySelectorAll("#quiz button");
-
-  buttons.forEach(b => {
-    if (b.innerText === correct) b.style.background = "green";
-    else if (b.innerText === selected) b.style.background = "red";
-    b.disabled = true;
-  });
-
-  if (selected === correct) score++;
-
-  setTimeout(() => nextQuestion(type), 800);
-}
-
-/* NEXT */
-function nextQuestion(type) {
-  currentQuestion++;
-
-  if (currentQuestion < currentQuiz.length) {
-    loadQuestion(type);
-  } else {
-    showResult(type);
+  if(document.body.classList.contains("dark-mode")){
+    localStorage.setItem("theme","dark");
+  }else{
+    localStorage.setItem("theme","light");
   }
 }
 
-/* RESULT */
-function showResult(type) {
-  document.getElementById("quiz").style.display = "none";
-  document.getElementById("result").style.display = "block";
+window.onload = function(){
 
-  document.getElementById("result").innerHTML = `
-    <h1>🎉 ${type} Quiz Finished</h1>
-    <h2>Your Score: ${score} / ${currentQuiz.length}</h2>
+  if(localStorage.getItem("theme")==="dark"){
+    document.body.classList.add("dark-mode");
+  }
 
-    <button onclick="location.reload()">Back to Home</button>
-  `;
+}
+
+
+// =========================
+// QUIZ
+// =========================
+
+const quizData = [
+
+{
+question:"India ka capital kya hai?",
+options:["Mumbai","Delhi","Kolkata","Chennai"],
+answer:"Delhi"
+},
+
+{
+question:"2 + 2 = ?",
+options:["3","4","5","6"],
+answer:"4"
+},
+
+{
+question:"SSC ka full form?",
+options:[
+"Staff Selection Commission",
+"State Service Center",
+"Simple Study Course",
+"None"
+],
+answer:"Staff Selection Commission"
+}
+
+];
+
+let currentQuestion=0;
+let score=0;
+
+function startQuiz(){
+
+currentQuestion=0;
+score=0;
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+const q=quizData[currentQuestion];
+
+document.body.innerHTML=`
+
+<div class="container text-center mt-5">
+
+<h2>${q.question}</h2>
+
+${q.options.map(opt=>`
+
+<button
+class="btn btn-primary m-2"
+onclick="checkAnswer('${opt}')">
+
+${opt}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`;
+
+}
+
+function checkAnswer(selected){
+
+if(selected===quizData[currentQuestion].answer){
+
+score++;
+
+}
+
+currentQuestion++;
+
+if(currentQuestion<quizData.length){
+
+showQuestion();
+
+}else{
+
+showResult();
+
+}
+
+}
+
+function showResult(){
+
+document.body.innerHTML=`
+
+<div class="container text-center mt-5">
+
+<h1>🎉 Quiz Finished</h1>
+
+<h3>Your Score : ${score}/${quizData.length}</h3>
+
+<button
+class="btn btn-success"
+onclick="location.reload()">
+
+Restart
+
+</button>
+
+</div>
+
+`;
+
+}
+
+function startSSC(){
+startQuiz();
+}
+
+function startIBPS(){
+startQuiz();
+}
+
+function startMock(){
+startQuiz();
 }

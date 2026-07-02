@@ -14,11 +14,31 @@ function toggleDarkMode() {
   }
 }
 
+function loadDate(){
+
+const d = new Date();
+
+const options = {
+  day: "numeric",
+  month: "short",
+  year: "numeric"
+};
+
+const el = document.getElementById("todayDate");
+
+if(el){
+  el.innerHTML = d.toLocaleDateString("en-IN", options);
+}
+
+}
+
 window.onload = function(){
 
   if(localStorage.getItem("theme")==="dark"){
     document.body.classList.add("dark-mode");
   }
+
+  loadDate();
 
 }
 

@@ -1,51 +1,67 @@
-
-
-// =========================
+// ==========================
 // DARK MODE
-// =========================
+// ==========================
 
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
 
-  if(document.body.classList.contains("dark-mode")){
-    localStorage.setItem("theme","dark");
-  }else{
-    localStorage.setItem("theme","light");
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
   }
 }
 
-function loadDate(){
+// ==========================
+// TODAY'S DATE
+// ==========================
 
-const d = new Date();
+function loadDate() {
+  const today = new Date();
 
-const options = {
-  day: "numeric",
-  month: "short",
-  year: "numeric"
-};
+  const options = {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  };
 
-const el = document.getElementById("todayDate");
+  const date = document.getElementById("todayDate");
 
-if(el){
-  el.innerHTML = d.toLocaleDateString("en-IN", options);
-}
-
-}
-
-window.onload = function(){
-
-  if(localStorage.getItem("theme")==="dark"){
-    document.body.classList.add("dark-mode");
+  if (date) {
+    date.innerHTML = today.toLocaleDateString("en-IN", options);
   }
+}
 
-  loadDate();
+// ==========================
+// SEARCH
+// ==========================
+
+function searchCards() {
+
+  const input = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+  const cards = document.querySelectorAll(".dashboard-card");
+
+  cards.forEach(card => {
+
+    const name = card.dataset.name.toLowerCase();
+
+    if (name.includes(input)) {
+      card.style.display = "flex";
+    } else {
+      card.style.display = "none";
+    }
+
+  });
 
 }
 
-
-// =========================
-// QUIZ
-// =========================
+// ==========================
+// QUIZ DATA
+// ==========================
 
 const quizData = [
 
@@ -74,29 +90,29 @@ answer:"Staff Selection Commission"
 
 ];
 
-let currentQuestion=0;
-let score=0;
+let currentQuestion = 0;
+let score = 0;
 
-function startQuiz(){
+function startQuiz() {
 
-currentQuestion=0;
-score=0;
+currentQuestion = 0;
+score = 0;
 
 showQuestion();
 
 }
 
-function showQuestion(){
+function showQuestion() {
 
-const q=quizData[currentQuestion];
+const q = quizData[currentQuestion];
 
-document.body.innerHTML=`
+document.body.innerHTML = `
 
 <div class="container text-center mt-5">
 
 <h2>${q.question}</h2>
 
-${q.options.map(opt=>`
+${q.options.map(opt => `
 
 <button
 class="btn btn-primary m-2"
@@ -114,21 +130,19 @@ ${opt}
 
 }
 
-function checkAnswer(selected){
+function checkAnswer(selected) {
 
-if(selected===quizData[currentQuestion].answer){
-
+if (selected === quizData[currentQuestion].answer) {
 score++;
-
 }
 
 currentQuestion++;
 
-if(currentQuestion<quizData.length){
+if (currentQuestion < quizData.length) {
 
 showQuestion();
 
-}else{
+} else {
 
 showResult();
 
@@ -136,9 +150,9 @@ showResult();
 
 }
 
-function showResult(){
+function showResult() {
 
-document.body.innerHTML=`
+document.body.innerHTML = `
 
 <div class="container text-center mt-5">
 
@@ -150,7 +164,7 @@ document.body.innerHTML=`
 class="btn btn-success"
 onclick="location.reload()">
 
-Restart
+Restart Quiz
 
 </button>
 
@@ -160,14 +174,28 @@ Restart
 
 }
 
-function startSSC(){
+function startSSC() {
 startQuiz();
 }
 
-function startIBPS(){
+function startIBPS() {
 startQuiz();
 }
 
-function startMock(){
+function startMock() {
 startQuiz();
 }
+
+// ==========================
+// LOAD
+// ==========================
+
+window.onload = function () {
+
+if (localStorage.getItem("theme") === "dark") {
+document.body.classList.add("dark-mode");
+}
+
+loadDate();
+
+};
